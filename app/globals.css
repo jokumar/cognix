@@ -1,26 +1,544 @@
 @import "tailwindcss";
 
 :root {
+  /* Primary Colors - Darker, more sophisticated */
+  --primary: #1e40af;
+  --primary-dark: #1e3a8a;
+  --primary-light: #3b82f6;
+  
+  /* Background Colors */
   --background: #ffffff;
-  --foreground: #171717;
+  --background-secondary: #f8fafc;
+  --background-dark: #0f172a;
+  --background-card: rgba(255, 255, 255, 0.9);
+  
+  /* Text Colors */
+  --foreground: #0f172a;
+  --foreground-secondary: #475569;
+  --foreground-muted: #64748b;
+  
+  /* Neutral Grays - Refined palette */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  
+  /* Accent Colors - Darkened for WCAG AA compliance (4.5:1 contrast on white) */
+  --accent-blue: #2563eb;
+  --accent-indigo: #4f46e5;
+  --accent-purple: #7c3aed;
+  --accent-cyan: #0e7490;
+  
+  /* Spacing Scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --spacing-2xl: 4rem;
+  --spacing-3xl: 6rem;
+  
+  /* Typography Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  
+  /* Shadow Scale */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* Border Radius Scale */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  
+  /* Transition Timing */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Glassmorphism Effects */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: 12px;
+  
+  /* Mobile Performance Optimizations */
+  --mobile-glass-blur: 8px;
+  --mobile-gradient-blur: 60px;
+  
+  /* Legacy Support */
+  --section-padding: 6rem;
+  --container-max-width: 1280px;
 }
 
 @theme inline {
+  /* Colors */
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-background-dark: var(--background-dark);
+  --color-background-card: var(--background-card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-indigo: var(--accent-indigo);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-cyan: var(--accent-cyan);
+  
+  /* Typography */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Courier New', monospace;
+  
+  /* Spacing */
+  --spacing-section: var(--section-padding);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
+}
+
+/* Enhanced Keyboard Navigation Focus Styles */
+/* Ensure focus is visible for keyboard users while avoiding mouse focus */
+a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Remove default outline for mouse users */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible),
+[role="button"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Ensure sections display in proper document flow with proper spacing */
+section {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Add consistent vertical spacing between sections */
+main > section:not(:last-child),
+main > div > section:not(:last-child) {
+  margin-bottom: 0;
+}
+
+/* Ensure proper spacing for all sections */
+section + section {
+  margin-top: 0;
+}
+
+/* Enhanced Typography System */
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h4 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h5 {
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+h6 {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+  text-wrap: pretty;
+}
+
+/* Ensure main content is centered and constrained */
+main {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+}
+
+/* Better card text alignment */
+.card-title {
+  margin-bottom: 0.75rem;
+}
+
+.card-description {
+  line-height: 1.6;
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 767px) {
+  /* Ensure minimum touch target size of 44x44px (iOS guidelines) */
+  button,
+  a[role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Improve tap highlighting */
+  a,
+  button {
+    -webkit-tap-highlight-color: rgba(37, 99, 235, 0.1);
+  }
+}
+
+/* Utility class for touch-friendly elements */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation utility classes */
+.animate-on-scroll {
+  animation: fadeInUp 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out;
+}
+
+/* Stagger delay classes for sequential animations */
+.stagger-1 {
+  animation-delay: 100ms;
+}
+
+.stagger-2 {
+  animation-delay: 200ms;
+}
+
+.stagger-3 {
+  animation-delay: 300ms;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile Performance Optimizations - Reduce blur effects on mobile viewports */
+@media (max-width: 768px) {
+  /* Reduce backdrop-filter blur to 8px on mobile for better performance */
+  .backdrop-blur-\[12px\] {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+  }
+  
+  /* Reduce gradient orb blur to 60px on mobile */
+  [style*="blur(80px)"] {
+    filter: blur(60px) !important;
+  }
+  
+  /* Apply reduced blur to any glassmorphism effects */
+  [class*="backdrop-blur"] {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
+/* Browser Compatibility Fallbacks */
+
+/* Backdrop-filter fallback for browsers that don't support it */
+@supports not (backdrop-filter: blur(12px)) {
+  /* Card components fallback - use more opaque background */
+  .backdrop-blur-\[12px\] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  /* Dark mode card fallback */
+  .dark .backdrop-blur-\[12px\] {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+  }
+  
+  /* Hero section glassmorphism fallback */
+  .backdrop-blur-\[12px\].bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  .dark .backdrop-blur-\[12px\].bg-gray-900\/10 {
+    background-color: rgba(17, 24, 39, 0.15) !important;
+  }
+  
+  /* Problem section cards fallback */
+  .backdrop-blur-\[12px\].bg-white\/10 {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  /* General fallback for any backdrop-blur usage */
+  [class*="backdrop-blur"] {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .dark [class*="backdrop-blur"] {
+    background-color: rgba(17, 24, 39, 0.95);
+  }
+}
+
+/* Additional fallback using -webkit prefix for older Safari versions */
+@supports not ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))) {
+  .backdrop-blur-\[12px\] {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+  
+  .dark .backdrop-blur-\[12px\] {
+    background-color: rgba(17, 24, 39, 0.95) !important;
+  }
+}
+
+/* CSS Grid fallback for browsers with limited or no Grid support */
+@supports not (display: grid) {
+  /* Convert grid layouts to flexbox */
+  .grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+  
+  /* Single column layouts */
+  .grid-cols-1 > * {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Two column layouts with gap simulation */
+  .grid-cols-2 > * {
+    flex: 0 0 calc(50% - 1rem) !important;
+    max-width: calc(50% - 1rem) !important;
+    margin: 0.5rem !important;
+  }
+  
+  /* Three column layouts */
+  .grid-cols-3 > * {
+    flex: 0 0 calc(33.333% - 1.334rem) !important;
+    max-width: calc(33.333% - 1.334rem) !important;
+    margin: 0.667rem !important;
+  }
+  
+  /* Responsive breakpoints - Medium screens (md:) */
+  @media (min-width: 768px) {
+    .md\:grid-cols-2 > * {
+      flex: 0 0 calc(50% - 1rem) !important;
+      max-width: calc(50% - 1rem) !important;
+      margin: 0.5rem !important;
+    }
+    
+    .md\:grid-cols-3 > * {
+      flex: 0 0 calc(33.333% - 1.334rem) !important;
+      max-width: calc(33.333% - 1.334rem) !important;
+      margin: 0.667rem !important;
+    }
+  }
+  
+  /* Responsive breakpoints - Large screens (lg:) */
+  @media (min-width: 1024px) {
+    .lg\:grid-cols-2 > * {
+      flex: 0 0 calc(50% - 1rem) !important;
+      max-width: calc(50% - 1rem) !important;
+      margin: 0.5rem !important;
+    }
+    
+    .lg\:grid-cols-3 > * {
+      flex: 0 0 calc(33.333% - 1.334rem) !important;
+      max-width: calc(33.333% - 1.334rem) !important;
+      margin: 0.667rem !important;
+    }
+    
+    .lg\:grid-cols-4 > * {
+      flex: 0 0 calc(25% - 1.5rem) !important;
+      max-width: calc(25% - 1.5rem) !important;
+      margin: 0.75rem !important;
+    }
+  }
+  
+  /* Gap fallback - simulate grid gap with margins */
+  .gap-4 {
+    margin: -0.5rem !important;
+  }
+  
+  .gap-4 > * {
+    margin: 0.5rem !important;
+  }
+  
+  .gap-6 {
+    margin: -0.75rem !important;
+  }
+  
+  .gap-6 > * {
+    margin: 0.75rem !important;
+  }
+  
+  .gap-8 {
+    margin: -1rem !important;
+  }
+  
+  .gap-8 > * {
+    margin: 1rem !important;
+  }
 }
